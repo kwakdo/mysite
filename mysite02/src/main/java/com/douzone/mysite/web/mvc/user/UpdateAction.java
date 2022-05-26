@@ -31,6 +31,7 @@ public class UpdateAction implements Action {
 		
 		new UserRepository().update(vo);
 		
+		authUser.setName(name);
 		WebUtil.redirect(request, response, request.getContextPath() + "/user?a=updateform");
 	}
 }
