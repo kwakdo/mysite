@@ -12,14 +12,17 @@ import com.douzone.mysite.vo.BoardVo;
 import com.douzone.web.mvc.Action;
 import com.douzone.web.util.WebUtil;
 
-public class IndexAction implements Action {
+public class ViewFormAction implements Action {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		List<BoardVo> list = new BoardRepository().findAll();
-		request.setAttribute("list", list);
 		
-		WebUtil.forward(request, response, "board/index");
+		String no = request.getParameter("no");
+		List<BoardVo> list =  new BoardRepository().findByNo(Integer.parseInt(no));
+		
+		request.setAttribute("list", list);
+
+		WebUtil.forward(request, response, "board/view");
 
 	}
 

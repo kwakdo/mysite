@@ -9,7 +9,9 @@ public class GuestbookActionFactory extends ActionFactory {
 	@Override
 	public Action getAction(String actionName) {
 		Action action = null;
-System.out.println(actionName);
+		
+		System.out.println(actionName);
+
 		if ("delete".equals(actionName)) {
 			action = new DeleteAction();
 

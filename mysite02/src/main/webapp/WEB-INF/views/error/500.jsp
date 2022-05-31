@@ -9,7 +9,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>예기치 않은 오류(Internal Server Error 500) - :(</h1>
+	<h1>예기치 않은 오류(Internal Server Error 500)     :(</h1>
 	<p>
 		죄송합니다. 요청하신 페이지를 찾을 수 없습니다.<br/>
 		잠시 후, 다시 시도해 주세요.
