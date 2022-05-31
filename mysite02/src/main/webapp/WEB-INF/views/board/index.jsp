@@ -26,7 +26,7 @@
 						<th>조회수</th>
 						<th>작성일</th>
 						<th>&nbsp;</th>
-					</tr>				
+					</tr>
 					<c:set var='count' value='${fn:length(list) }' />
 					<c:forEach items='${list }' var='vo' varStatus='status'>
 						<tr>
@@ -34,11 +34,11 @@
 							<td style="text-align:left; padding-left:10px">
 								<a href="${pageContext.request.contextPath }/board?a=view&no=${vo.no }">${vo.title }</a>
 							</td>
-							<td>${vo.user_name }</td>
+							<td>${vo.userName }</td>
 							<td>${vo.hit }</td>
-							<td>${vo.reg_date }</td>
+							<td>${vo.regDate }</td>
 							<td>
-								<c:if test="${vo.user_no = authUser.no }">
+								<c:if test="${vo.userNo == authUser.no }">
 									<a href="${pageContext.request.contextPath }/board?a=delete&no=${vo.no }" class="del">삭제</a>							
 								</c:if>
 							</td>

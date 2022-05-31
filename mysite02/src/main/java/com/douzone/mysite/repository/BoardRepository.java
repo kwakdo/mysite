@@ -112,13 +112,13 @@ public class BoardRepository {
 				vo.setNo(rs.getLong(1));
 				vo.setTitle(rs.getString(2));
 				vo.setContents(rs.getString(3));
-				vo.setRegDate(rs.getString(4));
-				vo.setHit(rs.getLong(5));
+				vo.setHit(rs.getLong(4));
+				vo.setRegDate(rs.getString(5));
 				vo.setGroupNo( rs.getLong (6));
 				vo.setOrderNo(rs.getLong (7));
 				vo.setDepth(rs.getLong (8));
-				vo.setUserNo(rs.getLong(9));
-				vo.setUserName(rs.getString(10));
+				vo.setUserName(rs.getString(9));
+				vo.setUserNo(rs.getLong(10));
 				
 				list.add(vo);
 			}
