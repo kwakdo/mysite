@@ -1,28 +1,28 @@
 package com.douzone.mysite.web.mvc.board;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import com.douzone.mysite.repository.BoardRepository;
-import com.douzone.mysite.vo.UserVo;
+import com.douzone.mysite.vo.BoardVo;
 import com.douzone.web.mvc.Action;
 import com.douzone.web.util.WebUtil;
 
-public class DeleteAction implements Action {
+public class ModifyFormAction implements Action {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
-		UserVo authUser = (UserVo) session.getAttribute("authUser");;
 		
-		long no = Integer.parseInt(request.getParameter("no"));
+		String no = request.getParameter("no");
+		List<BoardVo> list =  new BoardRepository().findByNo(Integer.parseInt(no));
 		
-		new BoardRepository().delete(no, authUser.getNo());
-		WebUtil.redirect(request, response, request.getContextPath() + "/board?a=board");
+		request.setAttribute("list", list);
+
+		WebUtil.forward(request, response, "board/modify");
 
 	}
 

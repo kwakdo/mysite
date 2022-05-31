@@ -37,7 +37,7 @@ public class BoardRepository {
 		try {
 			conn = getConnection();
 
-			String sql = "select a.no, a.title, a.contents, a.reg_date, a.hit, a.group_no, a.order_no, a.depth, b.no, b.name" + 
+			String sql = "select a.no, a.title, a.contents, a.reg_date, a.hit, a.g_no, a.o_no, a.depth, b.no, b.name" + 
 						 "	from board a, user b" + 
 						 "	where a.user_no = b.no and a.no=?";
 			pstmt = conn.prepareStatement(sql);
@@ -155,17 +155,13 @@ public class BoardRepository {
 				
 				String sql =
 						" insert" +
-						"   into guestbook" +
-						" values (null, ?, ?, ?, now(), ?, ?, ?, ?);";
+						"   into board" +
+						" values (null, ?, ?, 0, now(), 1, 1, 1, ?);";
 				pstmt = conn.prepareStatement(sql);
 				
 				pstmt.setString(1, vo.getTitle());
 				pstmt.setString(2, vo.getContents());
-				pstmt.setLong(3, vo.getHit());
-				pstmt.setLong(4, vo.getGroupNo());
-				pstmt.setLong(5, vo.getOrderNo());
-				pstmt.setLong(6, vo.getDepth());
-				pstmt.setLong(7, vo.getUserNo());
+				pstmt.setLong(3, vo.getUserNo());
 				
 				int count = pstmt.executeUpdate();
 				result = count == 1;
@@ -186,7 +182,133 @@ public class BoardRepository {
 			}		
 			
 			return result;
+		}
+
+	public void delete(long no, long userNo) {
+		Connection connection = null;
+		PreparedStatement pstmt = null;
+				
+		try {
+			connection = getConnection();
+				
+			String sql = " delete from board "
+					+ " where no = ? "
+					+ " and user_no = ?";
+			pstmt = connection.prepareStatement(sql);			
+			pstmt.setLong(1, no);
+			pstmt.setLong(2, userNo);
+								
+			pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			System.out.println("드라이버 로딩 실패:" + e);
+		} finally {
+			try {
+				if(pstmt != null) {
+					pstmt.close();
+				}
+				if(connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}	
-	
+		
 	}
+
+	public boolean update(BoardVo vo) {
+		boolean result = false;
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			conn = getConnection();
+			
+			String sql =
+					" update board set "
+							+ " title = ?  "
+							+ " , contents = ? "
+							+ " where no = ?";
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, vo.getTitle());
+			pstmt.setString(2, vo.getContents());
+			pstmt.setLong(3, vo.getNo());
+			
+			int count = pstmt.executeUpdate();
+			result = count == 1;
+			
+		} catch (SQLException e) {
+			System.out.println("error:" + e);
+		} finally {
+			try {
+				if(pstmt != null) {
+					pstmt.close();
+				}
+				if(conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}		
+		return result;
+		
+	}
+
+	public void reply(BoardVo vo) {
+		Connection connection = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			String title = vo.getTitle();
+			String contents = vo.getContents();
+			long groupNo = vo.getGroupNo();
+			long orderNo = vo.getOrderNo();
+			long depth = vo.getDepth();
+			long userNo = vo.getUserNo();
+			long no = vo.getNo();
+			
+			if(orderNo == 1) {
+				orderNo += 1;
+			}
+			System.out.println(orderNo + ", " + depth +", " + groupNo);
+			connection = getConnection();
+			
+			String sql = "INSERT INTO  "
+					+ " board (title, contents, hit, reg_date, g_no, o_no, depth, user_no) "
+					+ " select  ?, ?, 0, now(), ? , ?, ?, ? "
+					+ " from board where no = ?";
+			pstmt = connection.prepareStatement(sql);			
+			
+			pstmt.setString(1, title);
+			pstmt.setString(2, contents);
+			pstmt.setLong(3, groupNo);
+			pstmt.setLong(4, orderNo);
+			pstmt.setLong(5, depth+1);
+			pstmt.setLong(6, userNo);
+			pstmt.setLong(7, no);
+							
+			pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			System.out.println("드라이버 로딩 실패:" + e);
+		} finally {
+			try {
+				if(pstmt != null) {
+					pstmt.close();
+				}
+				if(connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}		
+		
+		
+	}
+	
+}
 	

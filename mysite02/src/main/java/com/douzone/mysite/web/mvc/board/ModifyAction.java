@@ -8,22 +8,28 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.douzone.mysite.repository.BoardRepository;
+import com.douzone.mysite.vo.BoardVo;
 import com.douzone.mysite.vo.UserVo;
 import com.douzone.web.mvc.Action;
 import com.douzone.web.util.WebUtil;
 
-public class DeleteAction implements Action {
+public class ModifyAction implements Action {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
-		UserVo authUser = (UserVo) session.getAttribute("authUser");;
 		
-		long no = Integer.parseInt(request.getParameter("no"));
+		Long no = Long.parseLong(request.getParameter("no"));
+		String title = request.getParameter("title");
+		String contents = request.getParameter("content");
 		
-		new BoardRepository().delete(no, authUser.getNo());
-		WebUtil.redirect(request, response, request.getContextPath() + "/board?a=board");
-
+		BoardVo vo = new BoardVo();
+		vo.setNo(no);
+		vo.setTitle(title);
+		vo.setContents(contents);
+		
+		new BoardRepository().update(vo);
+		
+		WebUtil.redirect(request, response, request.getContextPath() + "/board?a=view&no=" + no);
 	}
 
 }

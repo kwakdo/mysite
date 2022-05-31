@@ -17,27 +17,59 @@ public class WriteAction implements Action {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
-		UserVo authUser = (UserVo) session.getAttribute("authUser");
-		
-		int groupNo = Integer.parseInt(request.getParameter("groupno"));
-		// int orderNo = Integer.parseInt(request.getParameter("orderno"));
-		// int depth = Integer.parseInt(request.getParameter("depth"));
-		
-		BoardVo vo = new BoardVo();
-		vo.setTitle(request.getParameter("title"));
-		vo.setContents(request.getParameter("content"));
-		vo.setHit((long)0);
-		vo.setGroupNo((long)groupNo);
-		vo.setOrderNo((long)1);
-		vo.setDepth((long)0);
-		vo.setUserNo(authUser.getNo());
-		
-		
-		new BoardRepository().insert(vo);
+		//-----------------------------------------------------
+				// 접근 제어
+				HttpSession session = request.getSession();
+				if(session == null) {
+					WebUtil.redirect(request, response, request.getContextPath());
+					return;
+				}
+				
+				UserVo authUser = (UserVo)session.getAttribute("authUser");
+				// 접근 제어
+				if(authUser == null) {
+					WebUtil.redirect(request, response, request.getContextPath());
+					return;
+				}		
+		//-----------------------------------------------------
+				
+				String no = request.getParameter("no");
+				String groupNo = request.getParameter("groupNo");
+				String orderNo = request.getParameter("orderNo");
+				String depth = request.getParameter("depth");	
+				
+				String title = request.getParameter("title");
+				String contents = request.getParameter("content");
+				
+				BoardVo vo = new BoardVo();
+				vo.setTitle(title);
+				vo.setContents(contents);	
+				vo.setUserNo(authUser.getNo());
+				System.out.println(groupNo + "," + orderNo + "," + depth);
+				if("".equals(groupNo) || "".equals(orderNo) || "".equals(depth)) {
+					new BoardRepository().insert(vo);
+					System.out.println("INSERT");
+					WebUtil.redirect(request, response, request.getContextPath() + "/board");
+					return;
+				}
+				if(groupNo == null || orderNo == null || depth == null) {
+					new BoardRepository().insert(vo);
+					System.out.println("INSERT");
+					WebUtil.redirect(request, response, request.getContextPath() + "/board");
+					return;
+				}
+				
+				vo.setNo(Long.parseLong(no));
+				vo.setGroupNo(Long.parseLong(groupNo));
+				vo.setOrderNo(Long.parseLong(orderNo));
+				vo.setDepth(Long.parseLong(depth));
+				
+				new BoardRepository().reply(vo);
+				
+				System.out.println("REPLY");
+				WebUtil.redirect(request, response, request.getContextPath() + "/board");
+				
+					
+			}
 
-		System.out.println(authUser.getName());
-		WebUtil.redirect(request, response, request.getContextPath() + "/board?a=index");
-	}
-
-}
+		}
