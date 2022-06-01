@@ -1,6 +1,7 @@
 package com.douzone.mysite.web.mvc.board;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.ServletException;

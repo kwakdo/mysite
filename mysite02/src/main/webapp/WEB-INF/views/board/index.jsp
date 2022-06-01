@@ -29,20 +29,33 @@
 					</tr>
 					<c:set var='count' value='${fn:length(list) }' />
 					<c:forEach items='${list }' var='vo' varStatus='status'>
-						<tr>
-							<td>${count-status.index }</td>
-							<td style="text-align:left; padding-left:10px">
-								<a href="${pageContext.request.contextPath }/board?a=view&no=${vo.no }">${vo.title }</a>
-							</td>
+						<td>${count-status.index }</td>
+								<c:if test="${vo.orderNo == 1 }">									
+									<td style="text-align:left; padding-left:0px">
+										<a href="${pageContext.request.contextPath }/board?a=view&no=${vo.no }">${vo.title }</a>
+									</td>
+								</c:if>
+								<c:if test="${vo.orderNo > 1  && vo.depth == 1}">
+									<td style="text-align:left; padding-left:10px">
+										<img src='${pageContext.servletContext.contextPath }/assets/images/reply.png' />
+										<a href="${pageContext.request.contextPath }/board?a=view&no=${vo.no }">${vo.title }</a>
+									</td>
+								</c:if>
+								<c:if test='${vo.depth > 1 }'>
+									<td  style="text-align:left; padding-left:${vo.depth * 15 }px">
+										<img src='${pageContext.servletContext.contextPath }/assets/images/reply.png' />
+										<a href="${pageContext.request.contextPath }/board?a=view&no=${vo.no }">${vo.title }</a>
+									</td>
+								</c:if>
 							<td>${vo.userName }</td>
 							<td>${vo.hit }</td>
 							<td>${vo.regDate }</td>
 							<td>
-								<c:if test="${vo.userNo == authUser.no }">
-									<a href="${pageContext.request.contextPath }/board?a=delete&no=${vo.no }" class="del">삭제</a>							
-								</c:if>
+							 	<c:if test="${vo.userNo == authUser.no }">
+							 		<a href="${pageContext.request.contextPath }/board?a=delete&no=${vo.no }" class="del">삭제</a>
+							 	</c:if>		
 							</td>
-						</tr>
+					</tr>					
 					</c:forEach>			
 				</table>
 				

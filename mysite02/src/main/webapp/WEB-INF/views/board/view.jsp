@@ -49,7 +49,9 @@
 				</div>
 			</div>
 		</div>
-		<c:import url="/WEB-INF/views/includes/navigation.jsp" />
+		<c:import url="/WEB-INF/views/includes/navigation.jsp">
+			<c:param name="menu" value="board" />
+		</c:import>
 		<c:import url="/WEB-INF/views/includes/footer.jsp" />
 </body>
 </html>
