@@ -86,7 +86,7 @@ public class BoardRepository {
 
 	}
 
-	public List<BoardVo> findAll() {
+	public List<BoardVo> findAll(int pages) {
 		
 		List<BoardVo> list = new ArrayList<>();
 		
@@ -98,11 +98,14 @@ public class BoardRepository {
 			connection = getConnection();
 			
 			String sql =
-					" select a.no, a.title, a.contents, a.hit, a.reg_date, a.g_no, a.o_no, a.depth, b.name, a.user_no "
-						+ " from board a , user b "
-						+ " where a.user_no = b.no "
-						+ " order by g_no desc, o_no";
+					" select a.no, a.title, a.contents, a.hit, "
+							+ "a.reg_date, a.g_no, a.o_no, a.depth, b.name, a.user_no "
+							+ " from board a , user b "
+							+ " where a.user_no = b.no "
+							+ " order by g_no desc, o_no asc, depth asc  "
+							+ " limit ?, 5";			
 			pstmt = connection.prepareStatement(sql);
+			pstmt.setLong(1, (pages - 1) * 5);
 			
 			rs = pstmt.executeQuery();
 			
@@ -360,6 +363,46 @@ public class BoardRepository {
 		return result;
 		
 	}
+
+	public int count() {
+		int result = 0;
+		Connection connection = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			connection = getConnection();
+			
+			String sql =
+				"select count(*)" +
+				"	from board";
+			pstmt = connection.prepareStatement(sql);
+						
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				result = rs.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			System.out.println("드라이버 로딩 실패:" + e);
+		} finally {
+			try {
+				if(rs != null) {
+					rs.close();
+				}
+				if(pstmt != null) {
+					pstmt.close();
+				}
+				if(connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}	
 
 	
 	
