@@ -361,45 +361,7 @@ public class BoardRepository {
 		
 	}
 
-	public int countBoard() {
-		int result = 0;
-		Connection connection = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		
-		try {
-			connection = getConnection();
-			
-			String sql =
-				" select count(*) " +
-				"	from board";
-			pstmt = connection.prepareStatement(sql);
-						
-			rs = pstmt.executeQuery();
-			
-			while(rs.next()) {
-				result = rs.getInt(1);
-			}
-			
-		} catch (SQLException e) {
-			System.out.println("드라이버 로딩 실패:" + e);
-		} finally {
-			try {
-				if(rs != null) {
-					rs.close();
-				}
-				if(pstmt != null) {
-					pstmt.close();
-				}
-				if(connection != null) {
-					connection.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		return result;
-	}	
+	
 	
 }
 	

@@ -26,7 +26,6 @@ public class ViewFormAction implements Action {
 		request.setAttribute("list", list);
 		
 		COOKIE_NAME = "visitor" + Integer.parseInt(no);
-		System.out.println(COOKIE_NAME);
 		
 		Cookie[] cookies = request.getCookies();
 		if (cookies != null && cookies.length > 0) {
