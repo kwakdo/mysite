@@ -14,6 +14,7 @@ import com.douzone.mysite.service.GuestbookService;
 import com.douzone.mysite.vo.GuestbookVo;
 
 @Controller
+@RequestMapping("/guestbook")
 public class GuestbookController {
 	
 	@Autowired
@@ -27,21 +28,24 @@ public class GuestbookController {
 		return "guestbook/index";
 	}
 	
-	@RequestMapping(value="/add", method=RequestMethod.POST)
+	@RequestMapping(value="/insert", method=RequestMethod.POST)
 	public String add(GuestbookVo vo) {
 		guestbookService.addMessage(vo);
-		return "redirect:/";
+		System.out.println(vo);
+		return "redirect:/guestbook";
 	}
 	
 	@RequestMapping(value="/delete/{no}")
 	public String delete(@PathVariable("no") Long no, Model model)    {
 		model.addAttribute("no", no);
+		System.out.println("no: " + no);
 		return "guestbook/delete";
 	}
 	
 	@RequestMapping(value="/delete/{no}", method=RequestMethod.POST)
 	public String delete(@PathVariable("no") Long no, @RequestParam(value="password", required=true, defaultValue="") String password) {
 		guestbookService.deleteMessage(no, password);
+		System.out.println("no: " + no +  " passowrd: " + password);
 		return "redirect:/";
 	}
 	
