@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class MainContoller {
 	@RequestMapping({"/", "/main"})
 	public String index() {
-		return "/WEB-INF/views/main/index.jsp";
+		return "main/index";
 	}
 
 }
