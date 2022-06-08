@@ -10,6 +10,9 @@
 </head>
 <body>
 	<h1>Not Found(404)     :(</h1>
+	<img id="error"
+						src="${pageContext.request.contextPath }/assets/images/pinggu.jpg"
+						style="width: 280px" alt="profile image">
 	<p>
 		죄송합니다. 요청하신 페이지를 찾을 수 없습니다.
 	</p>
