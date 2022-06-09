@@ -10,7 +10,7 @@ select * from board;
 
 delete from board;
 
-select * from user;
+select * from guestbook;
 
 update user set name='관리자', email = '1', password='1' where no=3;
 

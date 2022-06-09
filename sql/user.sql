@@ -4,10 +4,17 @@ desc user;
 
 select * from user;
 
+desc guestbook;
 
 select * from guestbook;
 
+delete
+			from guestbook
+		where no='20' and password='12';
+
 select no, name from user where email='vv05044@gmail.com' and password='1234';
+
+delete from user where name='d';
 
 -- join
 insert
