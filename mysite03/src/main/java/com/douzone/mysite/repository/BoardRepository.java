@@ -8,14 +8,18 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.douzone.mysite.vo.BoardVo;
 
 @Repository
 public class BoardRepository {
-
 	
+	@Autowired
+	private SqlSession sqlSession;
+
 	private Connection getConnection() throws SQLException {
 		Connection connection = null;
 		try {
@@ -30,62 +34,7 @@ public class BoardRepository {
 	}
 	
 	public List<BoardVo> findByNo(long no) {
-		
-		List<BoardVo> list = new ArrayList<>();
-
-		Connection connection = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-
-		try {
-			connection = getConnection();
-
-			String sql = "select a.no, a.title, a.contents, a.reg_date, a.hit, a.g_no, a.o_no, a.depth, b.no, b.name" + 
-						 "	from board a, user b" + 
-						 "	where a.user_no = b.no and a.no=?";
-			pstmt = connection.prepareStatement(sql);
-
-			pstmt.setLong(1, no);
-
-			rs = pstmt.executeQuery();
-
-			while (rs.next()) {
-
-				BoardVo vo = new BoardVo();
-				vo.setNo(rs.getLong(1));
-				vo.setTitle(rs.getString(2));
-				vo.setContents(rs.getString(3));
-				vo.setRegDate(rs.getString(4));
-				vo.setHit(rs.getLong(5));
-				vo.setGroupNo( rs.getLong (6));
-				vo.setOrderNo(rs.getLong (7));
-				vo.setDepth(rs.getLong (8));
-				vo.setUserNo(rs.getLong(9));
-				vo.setUserName(rs.getString(10));
-				
-				list.add(vo);
-
-			}
-
-		} catch (SQLException e) {
-			System.out.println("error:" + e);
-		} finally {
-			try {
-				if (rs != null) {
-					rs.close();
-				}
-				if (pstmt != null) {
-					pstmt.close();
-				}
-				if (connection != null) {
-					connection.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-
-		return list;
+		return sqlSession.selectList("board.findByNo");
 
 	}
 
@@ -190,7 +139,7 @@ public class BoardRepository {
 			return result;
 		}
 
-	public void delete(long no, long userNo) {
+	public boolean delete(long no, long userNo) {
 		Connection connection = null;
 		PreparedStatement pstmt = null;
 				
@@ -219,7 +168,8 @@ public class BoardRepository {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-		}	
+		}
+		return false;	
 		
 	}
 

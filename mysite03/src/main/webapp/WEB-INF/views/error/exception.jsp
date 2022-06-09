@@ -9,13 +9,9 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>Not Found(404)     :(</h1>
-	<img id="error"
-						src="${pageContext.request.contextPath }/assets/images/pinggu.jpg"
-						style="width: 280px" alt="profile image">
-	<p>
-		죄송합니다. 요청하신 페이지를 찾을 수 없습니다.<br>
-		<br> <a href="${pageContext.request.contextPath }/main">메인화면</a>으로 가기<br>
-	</p>
+	<h1>Exception Occurs</h1>
+	<pre style="color: red; font-weight:bold">
+${exception }
+	</pre>
 </body>
 </html>

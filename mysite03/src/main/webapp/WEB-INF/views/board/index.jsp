@@ -32,19 +32,19 @@
 						<td>${count-status.index }</td>
 								<c:if test="${vo.orderNo == 1 }">									
 									<td style="text-align:left; padding-left:0px">
-										<a href="${pageContext.request.contextPath }/board?a=view&no=${vo.no }">${vo.title }</a>
+										<a href="${pageContext.request.contextPath }/board/view/${vo.no }">${vo.title }</a>
 									</td>
 								</c:if>
 								<c:if test="${vo.orderNo > 1  && vo.depth == 1}">
 									<td style="text-align:left; padding-left:10px">
 										<img src='${pageContext.servletContext.contextPath }/assets/images/reply.png' />
-										<a href="${pageContext.request.contextPath }/board?a=view&no=${vo.no }">${vo.title }</a>
+										<a href="${pageContext.request.contextPath }/board/view/${vo.no }">${vo.title }</a>
 									</td>
 								</c:if>
 								<c:if test='${vo.depth > 1 }'>
 									<td  style="text-align:left; padding-left:${vo.depth * 15 }px">
 										<img src='${pageContext.servletContext.contextPath }/assets/images/reply.png' />
-										<a href="${pageContext.request.contextPath }/board?a=view&no=${vo.no }">${vo.title }</a>
+										<a href="${pageContext.request.contextPath }/board/view/${vo.no }">${vo.title }</a>
 									</td>
 								</c:if>
 							<td>${vo.userName }</td>
@@ -52,7 +52,7 @@
 							<td>${vo.regDate }</td>
 							<td>
 							 	<c:if test="${vo.userNo == authUser.no }">
-							 		<a href="${pageContext.request.contextPath }/board?a=delete&no=${vo.no }" class="del">삭제</a>
+							 		<a href="${pageContext.request.contextPath }/board/delete/${vo.no }" class="del">삭제</a>
 							 	</c:if>		
 							</td>
 					</tr>					
@@ -63,21 +63,21 @@
 				<div class="pager">
 					<ul>
 					<c:if test="${pages.currentPage != 1 }">
-						<li><a href="${pageContext.servletContext.contextPath }/board?p=${pages.prevPage }">◀</a></li>
+						<li><a href="${pageContext.servletContext.contextPath }/board/${pages.prevPage }">◀</a></li>
 					</c:if>
 					<c:forEach var='page' begin='${pages.startPage }' end='${pages.lastPage }'>
 						<c:if test="${page == pages.currentPage }">
 							<li class ="selected">${page }</li>
 						</c:if>
 						<c:if test="${page <= pages.totalPage && page ne pages.currentPage }">
-							<li><a href="${pageContext.servletContext.contextPath }/board?p=${page }">${page }</a></li>
+							<li><a href="${pageContext.servletContext.contextPath }/board/${page }">${page }</a></li>
 						</c:if>
 						<c:if test="${page > pages.totalPage && pages.totalPage < pages.lastPage }">
 							${page }
 						</c:if>
 					</c:forEach>
 					<c:if test="${pages.currentPage < pages.totalPage }">
-						<li><a href="${pageContext.servletContext.contextPath }/board?p=${pages.nextPage }">▶</a></li>
+						<li><a href="${pageContext.servletContext.contextPath }/board/${pages.nextPage }">▶</a></li>
 					</c:if>
 					
 						
@@ -86,7 +86,7 @@
 				<!-- pager 추가 -->
 				
 				<div class="bottom">
-					<a href="${pageContext.servletContext.contextPath }/board?a=writeform" id="new-book">글쓰기</a>
+					<a href="${pageContext.servletContext.contextPath }/board/write" id="new-book">글쓰기</a>
 				</div>				
 			</div>
 		</div>
