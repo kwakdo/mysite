@@ -5,7 +5,7 @@
 		<![CDATA[
 		  select no,
 		  		 url,
-		  		 contents
+		  		 comments
 		    from gallery
 		order by no desc;		
 		]]>
@@ -21,7 +21,7 @@
 	
 	<insert id="upload" parameterType="galleryvo">
 		<![CDATA[
-		insert into gallery values (null, #{comments }, #{url })
+		insert into gallery values (null, #{url }, #{comments })
 		]]>
 	</insert>
 	

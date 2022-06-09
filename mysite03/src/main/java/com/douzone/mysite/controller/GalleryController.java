@@ -1,5 +1,7 @@
 package com.douzone.mysite.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,7 +27,9 @@ public class GalleryController {
 	private GalleryService galleryService;
 	
 	@RequestMapping("")
-	public String index() {
+	public String index(Model model) {
+		List<GalleryVo> list = galleryService.getImages();
+		model.addAttribute("list", list);
 		return "gallery/index";
 	}
 	
