@@ -8,6 +8,7 @@ import com.douzone.mysite.service.FileUploadService;
 import com.douzone.mysite.service.GalleryService;
 
 @Controller
+@RequestMapping("/gallery")
 public class GalleryController {
 	
 	@Autowired
