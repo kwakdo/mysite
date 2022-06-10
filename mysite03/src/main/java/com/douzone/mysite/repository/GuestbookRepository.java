@@ -17,18 +17,19 @@ public class GuestbookRepository {
 	private SqlSession sqlSession;
 	
 	public List<GuestbookVo> findAll() {
-		// before
-		StopWatch sw = new StopWatch();
-		sw.start();
-		
-		List<GuestbookVo> list = sqlSession.selectList("guestbook.findAll");
-		
-		// after
-		sw.stop();
-		Long totalTime = sw.getTotalTimeMillis();
-		System.out.println("[Execution Time][GuestbookRepository.findAll] " + totalTime + "millis");
-
-		return list;
+//		// before
+//		StopWatch sw = new StopWatch();
+//		sw.start();
+//		
+//		List<GuestbookVo> list = sqlSession.selectList("guestbook.findAll");
+//		
+//		// after
+//		sw.stop();
+//		Long totalTime = sw.getTotalTimeMillis();
+//		System.out.println("[Execution Time][GuestbookRepository.findAll] " + totalTime + "millis");
+//
+//		return list;
+		return sqlSession.selectList("guestbook.findAll");
 	}
 	
 	public boolean delete(Long no, String password) {
