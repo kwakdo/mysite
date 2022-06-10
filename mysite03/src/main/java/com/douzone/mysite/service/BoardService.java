@@ -13,9 +13,9 @@ public class BoardService {
 	@Autowired
 	private BoardRepository boardRepository;
 	
-//	public List<BoardVo> getMessage(int pages) {
-//		return boardRepository.findAll(pages);
-//	 }
+	public List<BoardVo> getContentsList(int pages) {
+		return boardRepository.findAll(pages);
+	}
 	
 	public BoardVo getContent(Long no) {
 		BoardVo boardVo = (BoardVo)boardRepository.findByNo(no);
@@ -23,13 +23,9 @@ public class BoardService {
 		if( boardVo != null ) {
 			boardRepository.HitUp(no);
 		}
-		
 		return boardVo;
 	}
 	
-	public List<BoardVo> getContent() {
-		return boardRepository.findAll(0);
-	}
 	
 	public boolean deleteMessage(Long no, Long userNo) {
 		return boardRepository.delete(no, userNo);
@@ -41,6 +37,8 @@ public class BoardService {
 	public void reply(BoardVo vo) {
 		boardRepository.reply(vo);
 	}
+
+	
 
 
 }

@@ -38,13 +38,6 @@ public class GalleryController {
 		galleryService.removeImages(no);
 		return "redirect:/gallery";
 	}
-	
-//	@RequestMapping(value="/upload", method=RequestMethod.POST)
-//	public String upload(GalleryVo vo) {
-//		galleryService.saveImage(vo);
-//		System.out.println(vo);
-//		return "redirect:/gallery";
-//	}
 
 	@RequestMapping(value="/upload", method=RequestMethod.POST)
 	   public String upload(

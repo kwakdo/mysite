@@ -6,7 +6,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,11 +35,21 @@ public class BoardRepository {
 		return connection;
 	}
 	
-	public List<BoardVo> findByNo(long no) {
-		return sqlSession.selectList("board.findByNo");
-
+	public BoardVo findByNo( Long no ) {
+		BoardVo vo = sqlSession.selectOne( "board.findByNo", no );
+		
+		return vo;
 	}
 
+//	public List<BoardVo> findAll(int pages) {
+//		 pages = (pages - 1) * 5;
+//
+//		Map<String, Object> map = new HashMap<>();
+//		map.put("pages", pages);
+//
+//		return sqlSession.selectList("board.findAll", map);
+//	}
+	
 	public List<BoardVo> findAll(int pages) {
 		
 		List<BoardVo> list = new ArrayList<>();

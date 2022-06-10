@@ -14,20 +14,19 @@
 		<c:import url="/WEB-INF/views/includes/header.jsp"/>
 		<div id="content">
 			<div id="board" class="board-form">
-					<c:forEach items='${list }' var='vo' varStatus='status' >
 						<table class="tbl-ex">				
 							<tr>
 								<th colspan="2">글보기</th>
 							</tr>
 							<tr>
 								<td class="label">제목</td>
-								<td>${vo.title }</td>
+								<td>${boardVo.title }</td>
 							</tr>
 							<tr>
 								<td class="label">내용</td>
 								<td>
 									<div class="view-content">
-										${fn:replace(vo.contents, newLine, "<br/>") }
+										${fn:replace(boardVo.contents, newLine, "<br>") }
 									</div>
 								</td>
 							</tr>
@@ -37,15 +36,14 @@
 							<c:choose>
 								<c:when test="${empty authUser }"></c:when>
 								<c:when test="${authUser.no eq vo.userNo }">
-									<a href="${pageContext.request.contextPath }/board?a=modifyform&no=${vo.no}">글수정</a>
-									<a href="${pageContext.request.contextPath }/board?a=writeform&no=${vo.no}&groupNo=${vo.groupNo}&orderNo=${vo.orderNo}&depth=${vo.depth}">답글달기</a>
+									<a href="${pageContext.request.contextPath }/board/modifyform/${vo.no}">글수정</a>
+									<a href="${pageContext.request.contextPath }/board/writeform/${vo.no}&groupNo=${vo.groupNo}&orderNo=${vo.orderNo}&depth=${vo.depth}">답글달기</a>
 								</c:when>
 								<c:otherwise>
-									<a href="${pageContext.request.contextPath }/board?a=writeform&no=${vo.no}&groupNo=${vo.groupNo}&orderNo=${vo.orderNo}&depth=${vo.depth}">답글달기</a>																							
+									<a href="${pageContext.request.contextPath }/board/writeform/${vo.no}&groupNo=${vo.groupNo}&orderNo=${vo.orderNo}&depth=${vo.depth}">답글달기</a>																							
 								</c:otherwise>
 							</c:choose>
 						</div>
-					</c:forEach>
 				</div>
 			</div>
 		</div>
