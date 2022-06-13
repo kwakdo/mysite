@@ -8,9 +8,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.douzone.mysite.security.Auth;
 import com.douzone.mysite.service.UserService;
 import com.douzone.mysite.vo.UserVo;
 
+@Auth(role="ADMIN")
 @Controller
 @RequestMapping("/user")
 public class UserController {
@@ -37,27 +39,16 @@ public class UserController {
 	public String login() {
 		return "user/login";
 	}
-	@RequestMapping(value="/login", method=RequestMethod.POST)
-	public String login(HttpSession session, UserVo vo, Model model) {
-		UserVo authUser = userService.getUser(vo);
-		if(authUser == null) {
-			model.addAttribute("result","fail");
-			model.addAttribute("eamil", vo.getEmail());
-			return "user/login";
+	
+	@RequestMapping(value="/auth")
+	public void auth() {
 		}
 		
-		/* 인증처리 */
-		session.setAttribute("authUser", authUser);
-		return "redirect:/";
-	}
-
 	@RequestMapping("/logout")
-	public String logout(HttpSession session) {
-		session.removeAttribute("authUser");
-		session.invalidate();
-		return "redirect:/";
+	public void logout() {
 	}
 	
+	@Auth()
 	@RequestMapping(value="/update", method=RequestMethod.GET)
 	public String update(HttpSession session, Model model) {
 		// 접근 제어(Access Control)
