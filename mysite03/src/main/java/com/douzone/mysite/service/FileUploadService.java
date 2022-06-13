@@ -20,7 +20,7 @@ public class FileUploadService {
 		try {
 		
 			if(multipartFile.isEmpty()) {
-				return url;
+				return null;
 			}
 			
 			File restireDirectory = new File(RESTORE_PATH);
