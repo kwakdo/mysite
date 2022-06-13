@@ -4,6 +4,7 @@ import javax.servlet.ServletContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,7 +29,9 @@ public class AdminController {
 	private FileUploadService fileUploadService;
 	
 	@RequestMapping("")
-	public String main() {
+	public String main(Model model) {
+		SiteVo vo = siteService.getSite();
+		model.addAttribute("site", vo);
 		return "admin/main";
 	}
 	
@@ -40,9 +43,9 @@ public class AdminController {
 		String url = fileUploadService.restore(multipartFile);
 		vo.setProfileURL(url);
 		
-		// siteService.updateSite(vo);
-		
-		return "redirect:/admin/main";
+		siteService.updateSite(vo);
+		servletContext.setAttribute("site", vo);
+		return "redirect:/admin";
 	}
 	
 	@RequestMapping("/guestbook")

@@ -11,7 +11,6 @@ import com.douzone.mysite.security.AuthUser;
 import com.douzone.mysite.service.UserService;
 import com.douzone.mysite.vo.UserVo;
 
-@Auth(role="ADMIN")
 @Controller
 @RequestMapping("/user")
 public class UserController {

@@ -2,6 +2,7 @@ package com.douzone.mysite.vo;
 
 public class SiteVo {
 	private Long no;
+	private String title;
 	private String welcomeMessage;
 	private String profileURL;
 	private String description;
@@ -11,6 +12,12 @@ public class SiteVo {
 	}
 	public void setNo(Long no) {
 		this.no = no;
+	}
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
 	}
 	public String getWelcomeMessage() {
 		return welcomeMessage;
@@ -33,9 +40,10 @@ public class SiteVo {
 	}
 	@Override
 	public String toString() {
-		return super.toString();
+		return "SiteVo [no=" + no + ", title=" + title + ", welcomeMessage=" + welcomeMessage + ", profileURL="
+				+ profileURL + ", description=" + description + "]";
 	}
-
+	
 	
 	
 }

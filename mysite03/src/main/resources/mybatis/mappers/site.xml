@@ -11,4 +11,13 @@
 		]]>
 	</select>
 	
+	<update id="update" parameterType="sitevo">
+		<![CDATA[	
+		  update site
+				 set title = #{title },
+				 welcome_message = #{welcomeMessage },
+				 description = #{description }
+		]]>
+		</update>
+	
 </mapper>

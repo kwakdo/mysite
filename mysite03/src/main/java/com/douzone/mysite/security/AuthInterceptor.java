@@ -30,7 +30,6 @@ public class AuthInterceptor implements HandlerInterceptor {
 		if(auth == null) {
 			/* 과제 */
 			auth = handlerMethod.getMethod().getDeclaringClass().getAnnotation(Auth.class);
-			System.out.println(auth);
 		}
 		
 		// 5. Type과 Method 모두에 @Auth가 안붙어 있는 경우
@@ -40,9 +39,14 @@ public class AuthInterceptor implements HandlerInterceptor {
 		
 		// 6. Handler Method에 @Auth가 붙어 있기 때문에 인증(Authentication) 여부 확인
 		HttpSession session = request.getSession();
-		UserVo authUser = (UserVo)session.getAttribute("authUser");
+		
+		if(session == null) {
+			response.sendRedirect(request.getContextPath()+"/user/login");
+			return false;
+		}
 		
 		// 7. @Auth가 적용되어 있지만, 인증이 되어 있지 않음
+		UserVo authUser = (UserVo)session.getAttribute("authUser");
 		if(authUser == null) {
 			response.sendRedirect(request.getContextPath() + "/user/login");
 			return false;
