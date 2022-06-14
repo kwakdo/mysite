@@ -18,7 +18,6 @@ public class MainContoller {
 		SiteVo vo = siteService.getSite();
 		
 		model.addAttribute("site", vo);
-		System.out.println(vo);
 		
 		return "main/index";
 	}
