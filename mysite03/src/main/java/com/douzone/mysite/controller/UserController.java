@@ -36,10 +36,10 @@ public class UserController {
 //			}
 			
 			model.addAllAttributes(result.getModel());
-//			model.addAttribute("userVo", userVo);
+			model.addAttribute("userVo", userVo);
 			return "user/join";
 		}
-		// userService.join(vo);
+		 userService.join(userVo);
 		return "redirect:/user/joinsuccess";
 	}
 	
