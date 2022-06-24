@@ -40,7 +40,7 @@ public class AdminController {
 				SiteVo vo, 
 				@RequestParam("file")MultipartFile multipartFile) {
 		
-		String url = fileUploadService.restore(multipartFile);
+		String url = fileUploadService.restoreImage(multipartFile);
 		vo.setProfileURL(url);
 		
 		siteService.updateSite(vo);

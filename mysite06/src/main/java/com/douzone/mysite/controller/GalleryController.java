@@ -49,7 +49,7 @@ public class GalleryController {
 		
 		System.out.println(comments + multipartFile);
 	      
-	      String url = fileuploadService.restore(multipartFile);      
+	      String url = fileuploadService.restoreImage(multipartFile);      
 	      GalleryVo vo = new GalleryVo();
 	      vo.setUrl(url);
 	      vo.setCommets(comments);
