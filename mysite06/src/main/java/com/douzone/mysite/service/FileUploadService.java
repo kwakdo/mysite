@@ -16,11 +16,11 @@ public class FileUploadService {
 	private static String SAVE_PATH = "/mysite-uploads/gallery";
 	private static String URL_BASE = "/assets/gallery";	
 	
-	public String restore(MultipartFile file) throws FileUploadException {
+	public String restoreImage(MultipartFile file) throws FileUploadException {
 		try {
 			File uploadDirectory = new File(SAVE_PATH);
 			if(!uploadDirectory.exists()) {
-				uploadDirectory.mkdir();
+				uploadDirectory.mkdirs();
 			}
 			
 			if(file.isEmpty()) {

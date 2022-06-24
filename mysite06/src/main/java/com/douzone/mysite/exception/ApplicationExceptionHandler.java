@@ -13,7 +13,7 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 @ControllerAdvice
 public class ApplicationExceptionHandler {
 	private static final Log LOGGER = LogFactory.getLog(ApplicationExceptionHandler.class);
-
+			
 	@ExceptionHandler(Exception.class)
 	public String handlerException(Model model, Exception e) {
 		// 404 Error
