@@ -13,7 +13,6 @@ public class UserService {
 
 	public void join(UserVo vo) {
 		userRepository.insert(vo);
-		
 	}
 
 	public UserVo getUser(String email, String password) {
@@ -32,13 +31,12 @@ public class UserService {
 		return userRepository.findByNo(no);
 	}
 
-	public void updateUser(UserVo vo) {
-		userRepository.update(vo);
-		
+	public UserVo getUser(String email) {
+		return userRepository.findByEmail(email);
 	}
 
-
-		
-	
+	public void updateUser(UserVo vo) {
+		userRepository.update(vo);
+	}
 
 }
